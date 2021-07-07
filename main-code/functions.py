@@ -1,5 +1,6 @@
 from api_key import api_key
 from apiclient.discovery import build
+import pandas as pd
 youtube = build("youtube", "v3", developerKey=api_key)
 
 
@@ -39,3 +40,45 @@ def get_video_information(video_id):
         id=video_id)
     response = request_video.execute()
     return response
+
+#function to get the information about all the videos from a channel, by using the channel json
+def get_all_videos_information(videos_json):
+    
+    all_videos_information = []
+    for video in range(len(videos_json)):
+        video_id = videos_json[video]["snippet"]["resourceId"]["videoId"]
+        video_information = get_video_information(video_id)
+        all_videos_information.append(video_information)
+
+    return all_videos_information
+
+
+#function to extract the essential information from the information and make a df
+
+def extract_essential_information(all_videos_json):
+    video_statistics = {}
+    video_publication_date = {}
+    video_titles = {}
+
+    for i in range(len(all_videos_json)):
+        statistics = all_videos_json[i]["items"][0]["statistics"]
+        video_statistics[i] = statistics
+
+    for i in range(len(all_videos_json)):
+        publication_date = all_videos_json[i]["items"][0]["snippet"]["publishedAt"]
+        video_publication_date[i] = publication_date
+
+    for i in range(len(all_videos_json)):
+        title = all_videos_json[i]["items"][0]["snippet"]["title"]
+        video_titles[i] = title
+
+    df_test = pd.DataFrame(video_statistics)
+    video_statistics_df = df_test.transpose()
+
+    series = pd.Series(video_publication_date)
+    publication_date_df = series.to_frame(name="publication_date")
+
+    series2 = pd.Series(video_titles)
+    titles_df = series2.to_frame(name="title")
+
+    videos_df = pd.concat([titles_df, publication_date_df, video_statistics_df],axis=1)
