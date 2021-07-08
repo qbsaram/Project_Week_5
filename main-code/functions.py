@@ -1,6 +1,8 @@
 from api_key import api_key
 from apiclient.discovery import build
 import pandas as pd
+
+#access to youtube api
 youtube = build("youtube", "v3", developerKey=api_key)
 
 
@@ -10,7 +12,7 @@ def get_all_videos(channel_id):
     '''
     Function to get all the videos from a channel
     Input: channel_id as string
-    Output:
+    Output: json with all the videos of the channel (video id)
     '''
     res = youtube.channels().list(id=channel_id, part="contentDetails").execute()
     
@@ -29,7 +31,6 @@ def get_all_videos(channel_id):
             break
     
     return videos
-
 
 
 #function to get video information by video id
@@ -82,3 +83,5 @@ def extract_essential_information(all_videos_json):
     titles_df = series2.to_frame(name="title")
 
     videos_df = pd.concat([titles_df, publication_date_df, video_statistics_df],axis=1)
+
+    return videos_df
