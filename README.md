@@ -1,6 +1,6 @@
 <img src="https://bit.ly/2VnXWr2" alt="Ironhack Logo" width="100"/>
 
-# Project Week 5: YouTube Data Analysis
+# Project Week 6: YouTube Data Analysis
 
 Kübra Bektas
 DAFT May 2021
