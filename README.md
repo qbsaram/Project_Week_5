@@ -27,7 +27,7 @@ The first step was to understand the working of the YouTube API. For this Google
 
 * Main: Project Goal is to quantify the interactions with the videos from the viewers.
 
-## <a id="organization"></a>Organization
+## <a id="organization"></a>Organization
 1. Step: For the time management a kanban board was created in Notion. The main step tabs were complemented with more detailed steps in text/bullet list formats. 
 2. Step: The data were downloaded using the API. 
 3. Step: Dateframes and visualizations were created with the help of Python and Tableau
